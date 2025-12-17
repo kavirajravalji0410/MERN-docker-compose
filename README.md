@@ -53,6 +53,7 @@ cd MERN-docker-compose/mern
 
 
 2. Start all services using Docker Compose
+```bash
 docker compose up -d --build
 
 
