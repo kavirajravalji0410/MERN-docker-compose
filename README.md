@@ -68,6 +68,11 @@ cd MERN-docker-compose/mern
 ```
 docker compose up -d --build
 ```
+
+### Docker Containers Running
+![Docker Compose](screenshots/docker-compose-ps.PNG)
+
+
 Docker will build images and start:
 
 - Frontend
@@ -80,6 +85,14 @@ Docker will build images and start:
 | Frontend | [http://localhost:5173](http://localhost:5173) |
 | Backend  | [http://localhost:5050](http://localhost:5050) |
 | MongoDB  | mongodb://localhost:27017                      |
+
+
+### Frontend UI
+![Frontend UI](screenshots/frontend-ui.PNG)
+
+
+### Backend Response
+![Backend](screenshots/backend-cannot-get.PNG)
 
 ### About Backend ```(Cannot GET /)```
 If you open:
@@ -97,6 +110,12 @@ This is **normal**.
  - API routes are exposed under ```/api/*```
 
 This confirms the backend container is healthy.
+
+
+### mongo-webpage
+![Backend](screenshots/mongo-webpage.PNG)
+
+
 
 ### Important Note About MongoDB (Very Common Confusion)
 MongoDB is not a web server.
@@ -121,9 +140,13 @@ docker compose logs mongodb
 ```
 You should see:
 ```
-You should see:
+Waiting for connections
 ```
 This means MongoDB is ready.
+
+### MongoDB Logs
+![MongoDB Logs](screenshots/mongo-logs.PNG)
+
 
 ### Method 2: Connect using Mongo Shell
 ```
@@ -136,8 +159,14 @@ test>
 MongoDB is running properly
 You can verify data with:
 ```
-You can verify data with:
+show dbs
 ```
+
+### Mongo Shell
+![Mongo Shell](screenshots/mongosh.PNG)
+
+
+
 ### Docker Networking (Internal Communication)
 Inside Docker Compose network:
  - Frontend talks to backend using:
@@ -168,29 +197,6 @@ docker compose down -v
 - Mongo shell ```(mongosh)``` output
   
 Screenshots will be added in the ```screenshots/``` folder.
-
-## Screenshots
-
-### Frontend UI
-![Frontend UI](screenshots/frontend-ui.PNG)
-
-### Docker Containers Running
-![Docker Compose](screenshots/docker-compose-ps.PNG)
-
-### Backend Response
-![Backend](screenshots/backend-cannot-get.PNG)
-
-### mongo-webpage
-![Backend](screenshots/mongo-webpage.PNG)
-
-
-### MongoDB Logs
-![MongoDB Logs](screenshots/mongo-logs.PNG)
-
-
-### Mongo Shell
-![Mongo Shell](screenshots/mongosh.PNG)
-
 
 ### Notes
 - This setup is meant for local development and learning
