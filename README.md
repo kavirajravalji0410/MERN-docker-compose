@@ -41,17 +41,6 @@ mern/
 └── README.md
 
 
----
-
-## Prerequisites
-
-Make sure you have:
-- Docker Desktop installed
-- Git installed
-
-No local Node.js or MongoDB installation is required.
-
----
 
 ## How to Run the Application
 
@@ -61,29 +50,34 @@ No local Node.js or MongoDB installation is required.
 git clone https://github.com/kavirajravalji0410/MERN-docker-compose.git
 cd MERN-docker-compose/mern
 
-2. Start all services
+
+
+2. Start all services using Docker Compose
 docker compose up -d --build
 
 
-Docker will build images and start:
+Docker will build the images and start the following containers:
+
+Frontend (React – Vite)
+
+Backend (Node.js – Express)
+
+MongoDB (Database)
+
+
+Verify the Application
+
+Once all containers are running, open the following URLs in your browser.
 
 Frontend
+http://localhost:5173
+
+
+You should see the employee management UI with existing records.
+
+
 
 Backend
-
-MongoDB
-
-Application URLs
-Service	URL
-Frontend	http://localhost:5173
-
-Backend	http://localhost:5050
-
-MongoDB	mongodb://localhost:27017
-About Backend (Cannot GET /)
-
-If you open:
-
 http://localhost:5050
 
 
@@ -92,76 +86,65 @@ You will see:
 Cannot GET /
 
 
-This is normal.
+This is expected behavior.
+The backend is running correctly, but no route is defined for /.
+API endpoints are exposed under /api/*.
 
-The backend is running correctly
 
-No route is defined for /
 
-API routes are exposed under /api/*
+MongoDB (Important Note)
 
-This confirms the backend container is healthy.
-
-Important Note About MongoDB (Very Common Confusion)
-
-MongoDB is not a web server.
-
-MongoDB does not use HTTP
-
-Browsers use HTTP
-
-MongoDB uses a binary TCP protocol
-
-So this will always fail:
+Do NOT try to open MongoDB in a browser:
 
 http://localhost:27017
 
 
-Browser ❌ → MongoDB ❌
-This is expected behavior. There is nothing to fix.
+MongoDB is not an HTTP service, so the browser will always fail.
+This does not mean MongoDB is down.
 
-Correct Ways to Verify MongoDB
-Method 1: Check MongoDB logs
+How to Confirm MongoDB Is Running (Correct Way)
+Option 1: Check MongoDB logs
 docker compose logs mongodb
 
 
-You should see:
+If you see:
 
 Waiting for connections
 
 
-This means MongoDB is ready.
+MongoDB is ready.
 
-Method 2: Connect using Mongo Shell
+Option 2: Connect using Mongo Shell
 docker exec -it mern-mongodb-1 mongosh
 
 
-If you get:
+If the shell opens and you see:
 
 test>
 
 
-MongoDB is running properly.
+MongoDB is running correctly.
 
-You can verify data with:
+You can verify data using:
 
 show dbs
 
+
 Docker Networking (Internal Communication)
 
-Inside Docker Compose network:
+Inside the Docker Compose network:
 
-Frontend talks to backend using:
+Frontend communicates with backend using:
 
 http://backend:5050
 
 
-Backend talks to MongoDB using:
+Backend connects to MongoDB using:
 
 mongodb://mongo:27017/employees
 
 
-Service names are resolved automatically by Docker DNS.
+Docker resolves service names automatically.
 
 Useful Docker Commands
 docker compose ps
@@ -169,47 +152,3 @@ docker compose logs frontend
 docker compose logs backend
 docker compose logs mongodb
 docker compose down -v
-
-Screenshots
-
-Screenshots from local setup are available in the screenshots/ directory:
-
-Frontend UI
-
-Running containers
-
-MongoDB logs
-
-Mongo shell output
-
-Notes
-
-This setup is meant for local development and learning
-
-MongoDB port is exposed only for testing
-
-Do not use this configuration directly in production
-
-No authentication is enabled for MongoDB
-
-Author
-
-Kaviraj Ravalji
-DevOps Engineer
-
-GitHub:
-https://github.com/kavirajravalji0410
-
-Final Thoughts
-
-This project helped me understand:
-
-Docker Compose in real scenarios
-
-Service-to-service communication
-
-Common MongoDB misconceptions
-
-Debugging containerized applications
-
-Feel free to fork or use it as a reference.
