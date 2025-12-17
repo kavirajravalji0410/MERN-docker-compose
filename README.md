@@ -169,6 +169,29 @@ docker compose down -v
   
 Screenshots will be added in the ```screenshots/``` folder.
 
+## Screenshots
+
+### Frontend UI
+![Frontend UI](screenshots/frontend-ui.PNG)
+
+### Docker Containers Running
+![Docker Compose](screenshots/docker-compose-ps.PNG)
+
+### Backend Response
+![Backend](screenshots/backend-cannot-get.PNG)
+
+### mongo-webpage
+![Backend](screenshots/mongo-webpage.PNG)
+
+
+### MongoDB Logs
+![MongoDB Logs](screenshots/mongo-logs.PNG)
+
+
+### Mongo Shell
+![Mongo Shell](screenshots/mongosh.PNG)
+
+
 ### Notes
 - This setup is meant for local development and learning
 - MongoDB port is exposed only for testing
