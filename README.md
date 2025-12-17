@@ -9,12 +9,13 @@
 This repository contains a **MERN stack application** (MongoDB, Express, React, Node.js) running locally using **Docker Compose**.
 
 The goal of this project is to understand:
+
 - How multiple services work together in Docker
 - Docker networking between frontend, backend, and database
 - Common mistakes (like accessing MongoDB from a browser)
 - Real-world local development setup using containers
 
-This is a **learning + practice project**, not a production deployment.
+This is a **learning and practice project**, not a production deployment.
 
 ---
 
@@ -30,17 +31,29 @@ This is a **learning + practice project**, not a production deployment.
 
 ## Project Structure
 
+```text
 mern/
-├── frontend/ # React frontend (Vite)
-│ ├── Dockerfile
-│ └── src/
-├── backend/ # Node.js + Express API
-│ ├── Dockerfile
-│ └── src/
-├── docker-compose.yaml # Docker Compose configuration
+├── frontend/                 # React frontend (Vite)
+│   ├── Dockerfile
+│   └── src/
+├── backend/                  # Node.js + Express API
+│   ├── Dockerfile
+│   └── src/
+├── docker-compose.yaml       # Docker Compose configuration
 └── README.md
+```
 
 
+## Prerequisites
+
+Make sure you have the following installed:
+
+- Docker Desktop
+- Git
+
+No local Node.js or MongoDB installation is required.
+
+---
 
 ## How to Run the Application
 
@@ -49,107 +62,62 @@ mern/
 ```bash
 git clone https://github.com/kavirajravalji0410/MERN-docker-compose.git
 cd MERN-docker-compose/mern
+```
 
-
-
-2. Start all services using Docker Compose
-```bash
+### 2. Start all services
 docker compose up -d --build
+Docker will build images and start:
 
+- Frontend
+- Backend
+- MongoDB
 
-Docker will build the images and start the following containers:
+### Application URLs
+| Service  | URL                                            |
+| -------- | ---------------------------------------------- |
+| Frontend | [http://localhost:5173](http://localhost:5173) |
+| Backend  | [http://localhost:5050](http://localhost:5050) |
+| MongoDB  | mongodb://localhost:27017                      |
 
-Frontend (React – Vite)
-
-Backend (Node.js – Express)
-
-MongoDB (Database)
-
-
-Verify the Application
-
-Once all containers are running, open the following URLs in your browser.
-
-Frontend
-http://localhost:5173
-
-
-You should see the employee management UI with existing records.
-
-
-
-Backend
+### About Backend (Cannot GET /)
+If you open:
+```
 http://localhost:5050
-
+```
 
 You will see:
-
+```
 Cannot GET /
+```
+This is **normal**.
+ - The backend is running correctly
+ - No route is defined for /
+ - API routes are exposed under /api/*
+This confirms the backend container is healthy.
 
+### Important Note About MongoDB (Very Common Confusion)
+MongoDB is not a web server.
+ - MongoDB does not use HTTP
+ - Browsers use HTTP
+ - MongoDB uses a binary TCP protocol
+  So this will always fail:
+```
+  http://localhost:27017
+```
+Browser ❌ → MongoDB ❌
 
-This is expected behavior.
-The backend is running correctly, but no route is defined for /.
-API endpoints are exposed under /api/*.
+This is expected behavior. 
+There is nothing to fix.
 
-
-
-MongoDB (Important Note)
-
-Do NOT try to open MongoDB in a browser:
-
-http://localhost:27017
-
-
-MongoDB is not an HTTP service, so the browser will always fail.
-This does not mean MongoDB is down.
-
-How to Confirm MongoDB Is Running (Correct Way)
-Option 1: Check MongoDB logs
+###  Correct Ways to Verify MongoDB
+### Method 1: Check MongoDB logs
+```
 docker compose logs mongodb
+```
+You should see:
+```
+You should see:
+```
+This means MongoDB is ready.
 
-
-If you see:
-
-Waiting for connections
-
-
-MongoDB is ready.
-
-Option 2: Connect using Mongo Shell
-docker exec -it mern-mongodb-1 mongosh
-
-
-If the shell opens and you see:
-
-test>
-
-
-MongoDB is running correctly.
-
-You can verify data using:
-
-show dbs
-
-
-Docker Networking (Internal Communication)
-
-Inside the Docker Compose network:
-
-Frontend communicates with backend using:
-
-http://backend:5050
-
-
-Backend connects to MongoDB using:
-
-mongodb://mongo:27017/employees
-
-
-Docker resolves service names automatically.
-
-Useful Docker Commands
-docker compose ps
-docker compose logs frontend
-docker compose logs backend
-docker compose logs mongodb
-docker compose down -v
+### Method 2: Connect using Mongo Shell
